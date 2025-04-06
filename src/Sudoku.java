@@ -5,16 +5,16 @@ import java.util.Map;
 
 public class Sudoku {
 
-    public ArrayList<List<Integer>> board;
+    public ArrayList<List<Square>> board;
 
     public Sudoku(Map<Position, Integer> squareMap){
       this.board = new ArrayList<>();
 
-
+      // isso aq nunca vai ter square editavel
       for (int i = 0; i < 9; i++) {
-          ArrayList<Integer> linha = new ArrayList<>();
+          ArrayList<Square> linha = new ArrayList<>();
           for (int j = 0; j < 9; j++){
-                linha.add(0);
+                linha.add(new Square(0, i,j,true));
             }
           board.add(linha);
       }
@@ -22,21 +22,29 @@ public class Sudoku {
       for (int i = 1; i <= 9; i++){
           for (int j = 1; j <= 9; j++){
               Integer valor = squareMap.get(new Position(i-1,j-1));
-              System.out.println(valor);
               if (valor != null){
-                  board.get(i-1).set(j-1,valor);
+                  setSquare(new Square(valor,i-1,j-1,false));
               }
           }
       }
 
+    };
+
+    public void setSquare(Square s){
+        Square atual = board.get(s.getPos().row).get(s.getPos().col);
+        if (atual.editable){
+            board.get(s.getPos().row).set(s.getPos().col, s);
+        } else{
+            System.out.println("no");
+        }
 
     };
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("Board:\n");
+        StringBuilder sb = new StringBuilder("\n");
         for (int i = 1; i <= board.size(); i++) {
-            List<Integer> row = board.get(i-1);
+            List<Square> row = board.get(i-1);
             for (int j = 1; j <= 9; j++) {
                 if (j % 3 == 0){
                     sb.append(row.get(j-1)).append(" | ");

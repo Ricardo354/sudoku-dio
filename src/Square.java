@@ -8,10 +8,12 @@ public class Square {
 
     public int number;
     public Position position;
+    public boolean editable;
 
-    public Square(int number, int row, int col) {
+    public Square(int number, int row, int col, boolean editable) {
         this.number = number;
         this.position = new Position(row, col);
+        this.editable = editable;
     }
 
     public int getNumber() {
@@ -24,10 +26,6 @@ public class Square {
 
     @Override
     public String toString() {
-        return "Square{" +
-                "number=" + number +
-                ", row=" + position.row +
-                ", col=" + position.col +
-                '}';
+        return ""+number;
     }
 }
