@@ -20,7 +20,7 @@ public class Main {
             ), Integer.parseInt(params[0]));
         }
 
-       Sudoku sudoku = new Sudoku();
+       Sudoku sudoku = new Sudoku(squareMap);
        System.out.println(sudoku);
 
         // [[],[],[]],

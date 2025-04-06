@@ -1,20 +1,32 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Sudoku {
 
-    public ArrayList<Object> board;
+    public ArrayList<List<Integer>> board;
 
-    public Sudoku(){
+    public Sudoku(Map<Position, Integer> squareMap){
       this.board = new ArrayList<>();
-      ArrayList<Integer> coluna = new ArrayList<>();
+
 
       for (int i = 0; i < 9; i++) {
-            coluna.add(i);
+          ArrayList<Integer> linha = new ArrayList<>();
+          for (int j = 0; j < 9; j++){
+                linha.add(0);
+            }
+          board.add(linha);
       }
-      //rows
-      for (int i = 0; i < 9; i++){
-          board.add(coluna);
+
+      for (int i = 1; i <= 9; i++){
+          for (int j = 1; j <= 9; j++){
+              Integer valor = squareMap.get(new Position(i-1,j-1));
+              System.out.println(valor);
+              if (valor != null){
+                  board.get(i-1).set(j-1,valor);
+              }
+          }
       }
 
 
@@ -22,9 +34,26 @@ public class Sudoku {
 
     @Override
     public String toString() {
-        return "Sudoku{" +
-                "board=" + board +
-                '}';
-        // ajeitar toString
+        StringBuilder sb = new StringBuilder("Board:\n");
+        for (int i = 1; i <= board.size(); i++) {
+            List<Integer> row = board.get(i-1);
+            for (int j = 1; j <= 9; j++) {
+                if (j % 3 == 0){
+                    sb.append(row.get(j-1)).append(" | ");
+                } else {
+                    sb.append(row.get(j-1)).append(" ");
+                }
+
+            }
+            if (i % 3 == 0){
+                sb.append("\n");
+                sb.append("-----------------------");
+                sb.append("\n");
+            } else {
+                sb.append("\n");
+            }
+
+        }
+        return sb.toString();
     }
 }
